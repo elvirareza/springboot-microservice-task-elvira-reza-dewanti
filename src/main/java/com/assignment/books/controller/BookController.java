@@ -56,4 +56,12 @@ public class BookController {
     ) {
         return ResponseEntity.ok(BaseResponse.success(bookService.partialUpdateBook(id, request)));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<BaseResponse<Void>> deleteBook(
+        @PathVariable Long id
+    ) {
+        bookService.deleteBook(id);
+        return ResponseEntity.ok(BaseResponse.success(null));
+    }
 }

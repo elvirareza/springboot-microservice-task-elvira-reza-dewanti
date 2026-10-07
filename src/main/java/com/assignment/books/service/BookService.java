@@ -68,6 +68,11 @@ public class BookService {
         return mapBookEntityToResBook(bookRepository.save(book));
     }
 
+    public void deleteBook(Long id) {
+        findBookById(id);
+        bookRepository.deleteById(id);
+    }
+
     private BookEntity findBookById(Long id) {
         return bookRepository.findById(id).orElseThrow(() ->
             new DataNotFoundException("book"));
