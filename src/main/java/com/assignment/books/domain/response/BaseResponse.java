@@ -20,4 +20,11 @@ public class BaseResponse<T> {
             .data(data)
             .build();
     }
+
+    public static <T> BaseResponse<T> dataNotFound(String message) {
+        return BaseResponse.<T>builder()
+            .message(String.format(ResponseMessage.DATA_NOT_FOUND_WITH_PARAMETER, message))
+            .data(null)
+            .build();
+    }
 }

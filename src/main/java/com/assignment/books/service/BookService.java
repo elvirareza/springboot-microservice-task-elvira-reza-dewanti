@@ -3,6 +3,7 @@ package com.assignment.books.service;
 import com.assignment.books.domain.request.ReqBook;
 import com.assignment.books.domain.response.ResBook;
 import com.assignment.books.entity.BookEntity;
+import com.assignment.books.exception.DataNotFoundException;
 import com.assignment.books.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,12 @@ public class BookService {
 
     public List<ResBook> getAllBooks() {
         return bookRepository.findAllBooks();
+    }
+
+    public ResBook getBookById(Long id) {
+        BookEntity book = bookRepository.findById(id).orElseThrow(() ->
+            new DataNotFoundException("book"));
+        return mapBookEntityToResBook(book);
     }
 
     private ResBook mapBookEntityToResBook(BookEntity bookEntity) {

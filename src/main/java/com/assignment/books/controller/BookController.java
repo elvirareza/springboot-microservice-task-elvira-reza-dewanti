@@ -32,4 +32,11 @@ public class BookController {
     public ResponseEntity<BaseResponse<List<ResBook>>> getAllBooks() {
         return ResponseEntity.ok(BaseResponse.success(bookService.getAllBooks()));
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<BaseResponse<ResBook>> getBookById(
+        @PathVariable Long id
+    ) {
+        return ResponseEntity.ok(BaseResponse.success(bookService.getBookById(id)));
+    }
 }
