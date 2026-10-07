@@ -7,6 +7,8 @@ import com.assignment.books.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class BookService {
@@ -21,6 +23,10 @@ public class BookService {
         book.setPublishedDate(request.getPublishedDate());
 
         return mapBookEntityToResBook(bookRepository.save(book));
+    }
+
+    public List<ResBook> getAllBooks() {
+        return bookRepository.findAllBooks();
     }
 
     private ResBook mapBookEntityToResBook(BookEntity bookEntity) {

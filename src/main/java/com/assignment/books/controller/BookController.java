@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/books")
 @RequiredArgsConstructor
@@ -24,5 +26,10 @@ public class BookController {
         return ResponseEntity
             .status(HttpStatus.CREATED)
             .body(BaseResponse.success(bookService.createBook(request)));
+    }
+
+    @GetMapping
+    public ResponseEntity<BaseResponse<List<ResBook>>> getAllBooks() {
+        return ResponseEntity.ok(BaseResponse.success(bookService.getAllBooks()));
     }
 }
