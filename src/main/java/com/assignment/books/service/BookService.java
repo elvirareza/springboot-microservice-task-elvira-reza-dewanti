@@ -36,6 +36,18 @@ public class BookService {
         return mapBookEntityToResBook(book);
     }
 
+    public ResBook updateBook(Long id, ReqBook request) {
+        BookEntity book = bookRepository.findById(id).orElseThrow(() ->
+            new DataNotFoundException("book"));
+
+        book.setTitle(request.getTitle());
+        book.setAuthor(request.getAuthor());
+        book.setIsbn(request.getIsbn());
+        book.setPublishedDate(request.getPublishedDate());
+
+        return mapBookEntityToResBook(bookRepository.save(book));
+    }
+
     private ResBook mapBookEntityToResBook(BookEntity bookEntity) {
         return new ResBook(
             bookEntity.getId(),
