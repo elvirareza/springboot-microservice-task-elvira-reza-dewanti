@@ -1,0 +1,28 @@
+package com.assignment.books.controller;
+
+
+import com.assignment.books.domain.request.ReqBook;
+import com.assignment.books.domain.response.BaseResponse;
+import com.assignment.books.domain.response.ResBook;
+import com.assignment.books.service.BookService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/books")
+@RequiredArgsConstructor
+public class BookController {
+    private final BookService bookService;
+
+    @PostMapping
+    public ResponseEntity<BaseResponse<ResBook>> createItem(
+        @Valid @RequestBody ReqBook request
+    ) {
+        return ResponseEntity
+            .status(HttpStatus.CREATED)
+            .body(BaseResponse.success(bookService.createBook(request)));
+    }
+}
