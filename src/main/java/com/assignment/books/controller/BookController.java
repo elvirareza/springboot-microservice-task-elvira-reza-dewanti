@@ -2,6 +2,7 @@ package com.assignment.books.controller;
 
 
 import com.assignment.books.domain.request.ReqBook;
+import com.assignment.books.domain.request.ReqBookPartial;
 import com.assignment.books.domain.response.BaseResponse;
 import com.assignment.books.domain.response.ResBook;
 import com.assignment.books.service.BookService;
@@ -46,5 +47,13 @@ public class BookController {
         @Valid @RequestBody ReqBook request
     ) {
         return ResponseEntity.ok(BaseResponse.success(bookService.updateBook(id, request)));
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<BaseResponse<ResBook>> partialUpdateBook(
+        @PathVariable Long id,
+        @RequestBody ReqBookPartial request
+    ) {
+        return ResponseEntity.ok(BaseResponse.success(bookService.partialUpdateBook(id, request)));
     }
 }

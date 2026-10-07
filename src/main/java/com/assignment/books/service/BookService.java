@@ -1,6 +1,7 @@
 package com.assignment.books.service;
 
 import com.assignment.books.domain.request.ReqBook;
+import com.assignment.books.domain.request.ReqBookPartial;
 import com.assignment.books.domain.response.ResBook;
 import com.assignment.books.entity.BookEntity;
 import com.assignment.books.exception.DataNotFoundException;
@@ -31,14 +32,11 @@ public class BookService {
     }
 
     public ResBook getBookById(Long id) {
-        BookEntity book = bookRepository.findById(id).orElseThrow(() ->
-            new DataNotFoundException("book"));
-        return mapBookEntityToResBook(book);
+        return mapBookEntityToResBook(findBookById(id));
     }
 
     public ResBook updateBook(Long id, ReqBook request) {
-        BookEntity book = bookRepository.findById(id).orElseThrow(() ->
-            new DataNotFoundException("book"));
+        BookEntity book = findBookById(id);
 
         book.setTitle(request.getTitle());
         book.setAuthor(request.getAuthor());
@@ -46,6 +44,33 @@ public class BookService {
         book.setPublishedDate(request.getPublishedDate());
 
         return mapBookEntityToResBook(bookRepository.save(book));
+    }
+
+    public ResBook partialUpdateBook(Long id, ReqBookPartial request) {
+        BookEntity book = findBookById(id);
+
+        if (request.getTitle() != null && !request.getTitle().isBlank()) {
+            book.setTitle(request.getTitle());
+        }
+
+        if (request.getAuthor() != null && !request.getAuthor().isBlank()) {
+            book.setAuthor(request.getAuthor());
+        }
+
+        if (request.getIsbn() != null && !request.getIsbn().isBlank()) {
+            book.setIsbn(request.getIsbn());
+        }
+
+        if (request.getPublishedDate() != null) {
+            book.setPublishedDate(request.getPublishedDate());
+        }
+
+        return mapBookEntityToResBook(bookRepository.save(book));
+    }
+
+    private BookEntity findBookById(Long id) {
+        return bookRepository.findById(id).orElseThrow(() ->
+            new DataNotFoundException("book"));
     }
 
     private ResBook mapBookEntityToResBook(BookEntity bookEntity) {
